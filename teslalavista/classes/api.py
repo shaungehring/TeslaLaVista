@@ -11,14 +11,14 @@ class TeslaAPI(object):
         self.access_token = None
         self.access_token_expiration = None
 
-    def __request_header(self):
+    def __request_header(self) -> dict:
         header = {
             "Authorization": "Bearer " + self.access_token
         }
 
         return header
 
-    def __get_api_endpoint(self, name):
+    def __get_api_endpoint(self, name: str) -> dict:
 
         endpoints = {
           "AUTHENTICATE": {
@@ -484,7 +484,7 @@ class TeslaAPI(object):
         else:
             print("No API endpoint found")
 
-    def __api_request(self, route_name, **kwargs):
+    def __api_request(self, route_name: str, **kwargs) -> requests.Response:
 
         headers = None
         data = None
@@ -515,14 +515,14 @@ class TeslaAPI(object):
             r = requests.get(uri, headers=headers)
 
         if r.status_code == 200:
-            return r
+            return r.json()
         else:
             raise Exception(r.text)
 
     '''
             Authentication
     '''
-    def refresh_access_token(self, username, password):
+    def refresh_access_token(self, username, password) -> str:
         if not self.access_token_expiration or self.access_token_expiration < time.time():
             request_data = {
                 "grant_type": "password",
@@ -538,58 +538,58 @@ class TeslaAPI(object):
                 parameters="?grant_type=password"
             )
 
-            self.access_token = r.json()["access_token"]
-            self.access_token_expiration = r.json()["expires_in"]
+            self.access_token = r["access_token"]
+            self.access_token_expiration = r["expires_in"]
 
         return self.access_token
 
     '''
         API Endpoints
     '''
-    def vehicles(self):
+    def vehicles(self) -> requests.Response:
         response = self.__api_request(
             route_name="VEHICLE_LIST"
         )
 
-        return response
+        return response["response"]
 
-    def vehicle_data(self, vehicle_id):
+    def vehicle_data(self, vehicle_id: int) -> requests.Response:
         response = self.__api_request(
             route_name="VEHICLE_DATA",
             url_ids={"vehicle_id": vehicle_id}
         )
 
-        return response
+        return response["response"]
 
-    def wake_up(self, vehicle_id):
+    def wake_up(self, vehicle_id: int) -> requests.Response:
         response = self.__api_request(
             route_name="WAKE_UP",
             url_ids={"vehicle_id": vehicle_id}
         )
 
-        return response
+        return response["response"]
 
-    def honk_horn(self, vehicle_id):
+    def honk_horn(self, vehicle_id: int) -> requests.Response:
         response = self.__api_request(
             route_name="HONK_HORN",
             url_ids={"vehicle_id": vehicle_id}
         )
 
-        return response
+        return response["response"]
 
-    def flash_lights(self, vehicle_id):
+    def flash_lights(self, vehicle_id: int) -> requests.Response:
         response = self.__api_request(
             route_name="FLASH_LIGHTS",
             url_ids={"vehicle_id": vehicle_id}
         )
 
-        return response
+        return response["response"]
 
-    def remote_start_drive(self, vehicle_id: int, password: str):
+    def remote_start_drive(self, vehicle_id: int, password: str) -> requests.Response:
         response = self.__api_request(
             route_name="REMOTE_START",
             url_ids={"vehicle_id": vehicle_id},
             request_data={"password": password}
         )
 
-        return response
+        return response["response"]

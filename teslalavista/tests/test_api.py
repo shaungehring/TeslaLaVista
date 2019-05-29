@@ -24,4 +24,4 @@ class TestAPI(unittest.TestCase):
         )
 
         r = api.vehicles()
-        assert r.status_code == 200
+        assert r

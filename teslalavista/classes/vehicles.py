@@ -1,4 +1,5 @@
 from teslalavista.classes.utilities import Utilities
+from teslalavista.classes.api import TeslaAPI
 from enum import Enum
 
 class ONLINE_STATE(Enum):
@@ -176,7 +177,7 @@ class Vehicle_Config(object):
 
 class Vehicle(object):
 
-    def __init__(self, api_object, vehicle_json):
+    def __init__(self, api_object: TeslaAPI, vehicle_json: dict):
         self.api = api_object
 
         self.id = int(vehicle_json["id"])
@@ -191,14 +192,14 @@ class Vehicle(object):
         self.climate = None
         self.charge = None
 
-    def update(self):
+    def update(self) -> None:
 
         if self.online_state == ONLINE_STATE.ASLEEP:
             self.wake_up()
 
         details = self.api.vehicle_data(vehicle_id=self.id)
 
-        details = details.json()["response"]
+        # details = details.json()["response"]
 
         self.config = Vehicle_Config(vehicle_config_json=details["vehicle_config"])
         self.state = Vehicle_State(vehicle_state_json=details["vehicle_state"])
@@ -207,7 +208,7 @@ class Vehicle(object):
         self.climate = Climate_State(climate_state_json=details["climate_state"])
         self.charge = Charge_State(charge_state_json=details["charge_state"])
 
-    def __str__(self):
+    def __str__(self) -> str:
         obj_str = "{name} - {id} - {state}".format(
             name=self.name,
             id=self.id,
