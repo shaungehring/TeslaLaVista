@@ -1,7 +1,7 @@
 api module
 ==========
 
-.. automodule:: classes.api
+.. automodule:: teslalavista.classes.api
     :members:
     :undoc-members:
     :show-inheritance:
