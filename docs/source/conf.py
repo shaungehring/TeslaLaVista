@@ -14,6 +14,10 @@ import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__name__), '..'))
 
+print("Look Here")
+print(os.path.join(os.path.dirname(__name__), '..'))
+print(sys.path)
+
 # -- Project information -----------------------------------------------------
 
 project = 'teslalavista'

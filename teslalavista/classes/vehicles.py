@@ -471,6 +471,7 @@ class VehicleCollection(object):
                 return vehicle
 
     def add_vehicle(self, vehicle: Vehicle) -> None:
+
         """
         Args:
             vehicle (Vehicle):
