@@ -9,9 +9,11 @@ class ONLINE_STATE(Enum):
 class Charge_State(object):
 
     def __init__(self, charge_state_json):
-        """
+
+        """Charge State Class
+
         Args:
-            charge_state_json:
+            charge_state_json: The Json dict that carries the Charge State Data
         """
         self.battery_heater_on = charge_state_json["battery_heater_on"]
         self.battery_level = charge_state_json["battery_level"]

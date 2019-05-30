@@ -67,6 +67,11 @@ class TeslaLaVista(object):
 
     def vehicles(self) -> VehicleCollection:
 
+        """Get the Vehicle Collection Object
+
+        Gets the Collection object for vehicles
+        """
+
         return self.vehicle_collection
 
     def vehicle(self, id: int = None, name: str = None) -> Vehicle:

@@ -1,3 +1,20 @@
+"""API Class to talk to Tesla API
+
+This module allows streamlined communication with the Tesla API. Routes can be added easily.
+
+Examples:
+
+  ``tesla_api = TeslaAPI()``
+
+  Get a access token
+
+  ``tesla_api.refresh_access_token(username="teslaUsername", password="TeslaIsAwesome")``
+
+  Get data from the Vehicles Route
+
+  ``tesla_api.vehicles()``
+
+"""
 import requests
 import time
 
@@ -12,6 +29,7 @@ class TeslaAPI(object):
         self.access_token = None
         self.access_token_expiration = None
 
+    # Todo: Automatically refresh the Auth token
     def __request_header(self) -> dict:
         """Creates the header needed for authorization
 
