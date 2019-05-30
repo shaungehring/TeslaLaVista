@@ -10,8 +10,8 @@ Guide
    :maxdepth: 2
    :caption: Contents:
 
-    teslalavista.rst
-    classes.rst
+    teslalavista
+    classes
 
 Indices and tables
 ==================
