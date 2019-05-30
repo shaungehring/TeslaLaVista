@@ -10,8 +10,15 @@ class TestAPI(unittest.TestCase):
         password=os.getenv('password', '')
         )
 
-    def test_vehicle_collection(self):
-        vehicles = self.tlv.vehicles()
+    # def test_vehicle_collection(self):
+    #     vehicles = self.tlv.vehicles()
+    #
+    #     for vehicle in vehicles.get_vehicles():
+    #         print(vehicle.name)
 
-        for vehicle in vehicles.get_vehicles():
-            print(vehicle.name)
+    # def test_vehicle_horn(self):
+    #     vehicles = self.tlv.vehicles()
+    #
+    #     my_car = vehicles.get_vehicle_by_name(name="Black Beauty")
+    #
+    #     my_car.honk_horn()

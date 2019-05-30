@@ -2,6 +2,7 @@ import requests
 import time
 
 class TeslaAPI(object):
+    """The API Class for talking to the Tesla API Service endpoints."""
 
     TESLA_CLIENT_ID = "81527cff06843c8634fdc09e8ac0abefb46ac849f38fe1e431c2ef2106796384"
     TESLA_CLIENT_SECRET = "c7257eb71a564034f9419ee651c7d0e5f7aa6bfbd18bafb5c5c033b093bb2fa3"
@@ -12,6 +13,11 @@ class TeslaAPI(object):
         self.access_token_expiration = None
 
     def __request_header(self) -> dict:
+        """Creates the header needed for authorization
+
+        Returns:
+            a header dictionary:
+        """
         header = {
             "Authorization": "Bearer " + self.access_token
         }
@@ -20,6 +26,11 @@ class TeslaAPI(object):
 
     def __get_api_endpoint(self, name: str) -> dict:
 
+        """Maps the pieces needed to make a API call with the name of the call
+
+        Args:
+            name (str): The name of the API call
+        """
         endpoints = {
           "AUTHENTICATE": {
             "TYPE": "POST",
@@ -486,6 +497,12 @@ class TeslaAPI(object):
 
     def __api_request(self, route_name: str, **kwargs) -> requests.Response:
 
+        """This makes the actual API Request
+
+        Args:
+            route_name (str): The name of the API call you are using
+            **kwargs: Supported kwargs (url_ids: The ID for the route), (parameters: any Query Parameters), (request_data: data for a POST that is required)
+        """
         headers = None
         data = None
         route_details = self.__get_api_endpoint(
@@ -523,6 +540,12 @@ class TeslaAPI(object):
             Authentication
     '''
     def refresh_access_token(self, username, password) -> str:
+
+        """
+        Args:
+            username:
+            password:
+        """
         if not self.access_token_expiration or self.access_token_expiration < time.time():
             request_data = {
                 "grant_type": "password",
@@ -547,6 +570,12 @@ class TeslaAPI(object):
         API Endpoints
     '''
     def vehicles(self) -> requests.Response:
+
+        """Get vehicles API call
+
+        Returns:
+            requests.Response:
+        """
         response = self.__api_request(
             route_name="VEHICLE_LIST"
         )
@@ -554,6 +583,15 @@ class TeslaAPI(object):
         return response["response"]
 
     def vehicle_data(self, vehicle_id: int) -> requests.Response:
+
+        """Get detailed Vehicle Data API call
+
+        Args:
+            vehicle_id (int): ID of the Vehicle
+
+        Returns:
+            requests.Response:
+        """
         response = self.__api_request(
             route_name="VEHICLE_DATA",
             url_ids={"vehicle_id": vehicle_id}
@@ -562,6 +600,15 @@ class TeslaAPI(object):
         return response["response"]
 
     def wake_up(self, vehicle_id: int) -> requests.Response:
+
+        """Wake Up the Vehicle API call
+
+        Args:
+            vehicle_id (int): ID of the Vehicle
+
+        Returns:
+            requests.Response:
+        """
         response = self.__api_request(
             route_name="WAKE_UP",
             url_ids={"vehicle_id": vehicle_id}
@@ -570,6 +617,15 @@ class TeslaAPI(object):
         return response["response"]
 
     def honk_horn(self, vehicle_id: int) -> requests.Response:
+
+        """Honk the horn API call
+
+        Args:
+            vehicle_id (int): ID of the Vehicle
+
+        Returns:
+            requests.Response:
+        """
         response = self.__api_request(
             route_name="HONK_HORN",
             url_ids={"vehicle_id": vehicle_id}
@@ -578,6 +634,15 @@ class TeslaAPI(object):
         return response["response"]
 
     def flash_lights(self, vehicle_id: int) -> requests.Response:
+
+        """Flash the head lights API call
+
+        Args:
+            vehicle_id (int): ID of the Vehicle
+
+        Returns:
+            requests.Response:
+        """
         response = self.__api_request(
             route_name="FLASH_LIGHTS",
             url_ids={"vehicle_id": vehicle_id}
@@ -586,6 +651,16 @@ class TeslaAPI(object):
         return response["response"]
 
     def remote_start_drive(self, vehicle_id: int, password: str) -> requests.Response:
+
+        """Set the Vehicle as Drivable API call
+
+        Args:
+            vehicle_id (int): ID of the Vehicle
+            password (str): Tesla Account Password (for Confirmation)
+
+        Returns:
+            requests.Response:
+        """
         response = self.__api_request(
             route_name="REMOTE_START",
             url_ids={"vehicle_id": vehicle_id},

@@ -9,6 +9,10 @@ class ONLINE_STATE(Enum):
 class Charge_State(object):
 
     def __init__(self, charge_state_json):
+        """
+        Args:
+            charge_state_json:
+        """
         self.battery_heater_on = charge_state_json["battery_heater_on"]
         self.battery_level = charge_state_json["battery_level"]
         self.battery_range = charge_state_json["battery_range"]
@@ -55,6 +59,10 @@ class Charge_State(object):
 class Climate_State(object):
 
     def __init__(self, climate_state_json):
+        """
+        Args:
+            climate_state_json:
+        """
         self.battery_heater = Utilities.set_if_available("battery_heater", climate_state_json)
         self.battery_heater_no_power = Utilities.set_if_available("battery_heater_no_power", climate_state_json)
         self.climate_keeper_mode = Utilities.set_if_available("climate_keeper_mode", climate_state_json)
@@ -89,6 +97,10 @@ class Climate_State(object):
 class Drive_State(object):
 
     def __init__(self, drive_state_json):
+        """
+        Args:
+            drive_state_json:
+        """
         self.gps_as_of = Utilities.set_if_available("gps_as_of", drive_state_json)
         self.heading = Utilities.set_if_available("heading", drive_state_json)
         self.latitude = Utilities.set_if_available("latitude", drive_state_json)
@@ -105,6 +117,10 @@ class Drive_State(object):
 class GUI_State(object):
 
     def __init__(self, gui_state_json):
+        """
+        Args:
+            gui_state_json:
+        """
         self.gui_24_hour_time = Utilities.set_if_available("gui_24_hour_time", gui_state_json)
         self.gui_charge_rate_units = Utilities.set_if_available("gui_charge_rate_units", gui_state_json)
         self.gui_distance_units = Utilities.set_if_available("gui_distance_units", gui_state_json)
@@ -115,6 +131,10 @@ class GUI_State(object):
 class Vehicle_State(object):
     # TODO: Add speed_limit_mode Class
     def __init__(self, vehicle_state_json):
+        """
+        Args:
+            vehicle_state_json:
+        """
         self.api_version = Utilities.set_if_available("api_version", vehicle_state_json)
         self.autopark_state_v2 = Utilities.set_if_available("autopark_state_v2", vehicle_state_json)
         self.autopark_style = Utilities.set_if_available("autopark_style", vehicle_state_json)
@@ -150,6 +170,10 @@ class Vehicle_State(object):
 class Vehicle_Config(object):
 
     def __init__(self, vehicle_config_json):
+        """
+        Args:
+            vehicle_config_json:
+        """
         self.can_accept_navigation_requests = Utilities.set_if_available("can_accept_navigation_requests", vehicle_config_json)
         self.can_actuate_trunks = Utilities.set_if_available("can_actuate_trunks", vehicle_config_json)
         self.car_special_type = Utilities.set_if_available("car_special_type", vehicle_config_json)
@@ -178,6 +202,11 @@ class Vehicle_Config(object):
 class Vehicle(object):
 
     def __init__(self, api_object: TeslaAPI, vehicle_json: dict):
+        """
+        Args:
+            api_object (TeslaAPI):
+            vehicle_json (dict):
+        """
         self.api = api_object
 
         self.id = int(vehicle_json["id"])
@@ -221,6 +250,11 @@ class Vehicle(object):
         Commands
     '''
     def wake_up(self) -> bool:
+        """Sends a Wake Up to the car so you can get more details.
+
+        Returns:
+            bool: Was the call successful
+        """
         self.api.wake_up(vehicle_id=self.id)
 
         return True
@@ -236,30 +270,59 @@ class Vehicle(object):
         return True
 
     def remote_start_drive(self, password: str) -> bool:
+        """
+        Args:
+            password (str):
+        """
         self.api.remote_start_drive(vehicle_id=self.id, password=password)
 
         return True
 
     # TODO: Connect all remaining commands to API Calls
     def speed_limit_set_limit(self, limit_mph: int) -> bool:
+        """
+        Args:
+            limit_mph (int):
+        """
         pass
 
     def speed_limit_activate(self, pin: int) -> bool:
+        """
+        Args:
+            pin (int):
+        """
         pass
 
     def speed_limit_deactivate(self, pin: int) -> bool:
+        """
+        Args:
+            pin (int):
+        """
         pass
 
     def speed_limit_clear_pin(self, pin: int) -> bool:
+        """
+        Args:
+            pin (int):
+        """
         pass
 
     def set_valet_mode(self, on: bool, password: str) -> bool:
+        """
+        Args:
+            on (bool):
+            password (str):
+        """
         pass
 
     def reset_valet_pin(self) -> bool:
         pass
 
     def set_sentry_mode(self, on: bool) -> bool:
+        """
+        Args:
+            on (bool):
+        """
         pass
 
     def open_trunk(self) -> bool:
@@ -299,6 +362,10 @@ class Vehicle(object):
         pass
 
     def set_charge_limit(self, percent: int) -> bool:
+        """
+        Args:
+            percent (int):
+        """
         pass
 
     def auto_conditioning_start(self) -> bool:
@@ -308,12 +375,26 @@ class Vehicle(object):
         pass
 
     def set_temps(self, driver_temp: float, passenger_temp: float) -> bool:
+        """
+        Args:
+            driver_temp (float):
+            passenger_temp (float):
+        """
         pass
 
     def remote_seat_heater_request(self, seat: int, heat_level: int) -> bool:
+        """
+        Args:
+            seat (int):
+            heat_level (int):
+        """
         pass
 
     def remote_steering_wheel_heater_request(self, on: bool) -> bool:
+        """
+        Args:
+            on (bool):
+        """
         pass
 
     def media_toggle_playback(self) -> bool:
@@ -338,9 +419,18 @@ class Vehicle(object):
         pass
 
     def navigation_request(self, locale: str, address: str) -> bool:
+        """
+        Args:
+            locale (str):
+            address (str):
+        """
         pass
 
     def schedule_software_update(self, timestamp: int) -> bool:
+        """
+        Args:
+            timestamp (int):
+        """
         pass
 
     def cancel_software_update(self) -> bool:
@@ -353,20 +443,37 @@ class VehicleCollection(object):
         self.vehicles = []
 
     def get_vehicles(self) -> list:
+        """Gets the list of Vehicles
+
+        The class collects all of the Vehicles on the account and puts them
+        in the list. This returns everything.
+        """
         return self.vehicles
 
     def get_vehicle_by_name(self, name: str) -> Vehicle:
 
+        """
+        Args:
+            name (str):
+        """
         for vehicle in self.vehicles:
             if name == vehicle.name:
                 return vehicle
 
     def get_vehicle_by_id(self, id: int) -> Vehicle:
 
+        """
+        Args:
+            id (int):
+        """
         for vehicle in self.vehicles:
             if id == vehicle.id:
                 return vehicle
 
     def add_vehicle(self, vehicle: Vehicle) -> None:
+        """
+        Args:
+            vehicle (Vehicle):
+        """
         self.vehicles.append(vehicle)
 
