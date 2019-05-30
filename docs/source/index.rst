@@ -7,11 +7,11 @@ Documentation for using the TeslaLaVista module. This module was developed to ha
 Guide
 =====
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
 
-    source/teslalavista.rst
-    source/classes.rst
+   teslalavista
+   classes
 
 Indices and tables
 ==================
